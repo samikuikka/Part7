@@ -5,10 +5,11 @@ import {
   Switch,
   Route,
   Link,
-  useRouteMatch
+  useRouteMatch,
+  useHistory
 } from 'react-router-dom'
 
-const Menu = ({ addNew, anecdotes, anecdote}) => {
+const Menu = ({ addNew, anecdotes, anecdote, notification}) => {
   const padding = {
     paddingRight: 5
   }
@@ -19,6 +20,8 @@ const Menu = ({ addNew, anecdotes, anecdote}) => {
           <Link to='/create' style={padding}>create new</Link>
           <Link to='/about' style={padding}>about</Link>
        </div>
+
+       {notification ? notification : null}
 
        <Switch>
          <Route path="/anecdotes/:id">
@@ -88,7 +91,10 @@ const CreateNew = (props) => {
   const [info, setInfo] = useState('')
 
 
+  const history = useHistory()
+
   const handleSubmit = (e) => {
+
     e.preventDefault()
     props.addNew({
       content,
@@ -96,6 +102,7 @@ const CreateNew = (props) => {
       info,
       votes: 0
     })
+    history.push('/')
   }
 
   return (
@@ -144,7 +151,12 @@ const App = () => {
   const addNew = (anecdote) => {
     anecdote.id = (Math.random() * 10000).toFixed(0)
     setAnecdotes(anecdotes.concat(anecdote))
+    setNotification(`a new anecdote ${anecdote.content} created!`)
+    setTimeout(() => {
+      setNotification(null)
+    }, 10000)
   }
+
 
   const anecdoteById = (id) =>
     anecdotes.find(a => a.id === id)
@@ -168,7 +180,7 @@ const App = () => {
   return (
     <div>
       <h1>Software anecdotes</h1>
-      <Menu addNew={addNew} anecdotes={anecdotes} anecdote={foundAnecdote} />
+      <Menu addNew={addNew} setNotification={setNotification} anecdotes={anecdotes} anecdote={foundAnecdote} notification={notification} />
       <Footer />
     </div>
   )
