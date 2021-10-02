@@ -109,6 +109,12 @@ const CreateNew = (props) => {
     history.push('/')
   }
 
+  const reset = () => {
+    contentHook.reset()
+    authorHook.reset()
+    infoHook.reset()
+  }
+
   return (
     <div>
       <h2>create a new anecdote</h2>
@@ -125,7 +131,8 @@ const CreateNew = (props) => {
           url for more info
           <input {...infoHook} />
         </div>
-        <button>create</button>
+        <button type='submit'>create</button>
+        <button type='button' onClick={reset} >reset</button>
       </form>
     </div>
   )
