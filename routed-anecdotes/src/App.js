@@ -92,12 +92,27 @@ const CreateNew = (props) => {
   const authorHook = useField('author')
   const infoHook = useField('info')
 
+  const noReset = ({name, value, onChange}) => {
+    return( {
+      name,
+      value,
+      onChange
+    })
+  }
+  
+  const content2 = noReset(contentHook)
+  const author2 = noReset(authorHook)
+  const info2 = noReset(infoHook)
+
+
+
   const history = useHistory()
 
   const handleSubmit = (e) => {
     const content = contentHook.value
     const author = authorHook.value
     const info = infoHook.value
+
 
     e.preventDefault()
     props.addNew({
@@ -121,15 +136,15 @@ const CreateNew = (props) => {
       <form onSubmit={handleSubmit}>
         <div>
           content
-          <input {...contentHook} />
+          <input {...content2} />
         </div>
         <div>
           author
-          <input {...authorHook} />
+          <input {...author2} />
         </div>
         <div>
           url for more info
-          <input {...infoHook} />
+          <input {...info2} />
         </div>
         <button type='submit'>create</button>
         <button type='button' onClick={reset} >reset</button>
