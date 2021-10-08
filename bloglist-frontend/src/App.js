@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import Blog from './components/Blog'
 import blogService from './services/blogs'
-import loginServices from './services/login'
 import LoginForm from './components/LoginForm'
+import loginServices from './services/login'
 import CreateForm from './components/CreateForm'
 import Notification from './components/Notification'
 import Togglable from './components/Togglable'
@@ -11,12 +11,13 @@ import { setNotification } from './reducers/notificationReducer'
 import { useDispatch, useSelector } from 'react-redux'
 import { setError } from './reducers/isErrorReducer'
 import { initialize, createBlog, like, removeBlog } from './reducers/blogsReducer'
+import { userLogin, logout } from './reducers/userReducer'
 
 const App = () => {
   const blogs = useSelector(state => state.blogs)
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const [user, setUser] = useState(null)
+  const user = useSelector(state => state.user)
 
   const dispatch = useDispatch()
 
@@ -24,14 +25,16 @@ const App = () => {
     dispatch(initialize())
   }, [dispatch])
 
+
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedNoteappUser')
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
-      setUser(user)
+      dispatch(userLogin(user))
       blogService.setToken(user.token)
     }
   }, [])
+
 
   const handleLogin = async (event) => {
     event.preventDefault()
@@ -42,8 +45,9 @@ const App = () => {
       window.localStorage.setItem(
         'loggedNoteappUser', JSON.stringify(user)
       )
+      console.log(user)
       blogService.setToken(user.token)
-      setUser(user)
+      dispatch(userLogin(user))
       setUsername('')
       setPassword('')
 
@@ -65,7 +69,7 @@ const App = () => {
 
   const handleLogout = async (event) => {
     event.preventDefault()
-    setUser(null)
+    dispatch(logout())
     window.localStorage.clear()
   }
 
