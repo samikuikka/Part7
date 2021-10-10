@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { logout, userLogin } from './reducers/userReducer'
 import blogService from './services/blogs'
 import Users from './components/Users'
+import User from './components/User'
 
 import {
   Switch,
@@ -12,6 +13,7 @@ import {
 } from 'react-router-dom'
 
 const App = () => {
+  //
   const user = useSelector(state => state.user)
   const dispatch = useDispatch()
 
@@ -39,6 +41,9 @@ const App = () => {
         : null }
 
       <Switch>
+        <Route path='/users/:id' >
+          <User />
+        </Route>
         <Route path='/users'>
           <Users />
         </Route>

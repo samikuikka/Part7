@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { getUsers } from '../reducers/usersReducer'
-import  User  from '../components/User'
+import  TableUser  from './TableUser'
 
 const Users = () => {
   const users = useSelector(state => state.users)
@@ -32,7 +32,7 @@ const Users = () => {
         </thead>
         <tbody>
           { users.map(user =>
-            <User key={user.id} user={user} /> )
+            <TableUser key={user.id} user={user} /> )
           }
         </tbody>
       </table>
