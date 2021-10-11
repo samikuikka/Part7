@@ -3,7 +3,7 @@ import Togglable from './Togglable'
 import CreateForm from './CreateForm'
 import Blog from './Blog'
 import { useSelector, useDispatch } from 'react-redux'
-import { initialize, createBlog, like, removeBlog } from '../reducers/blogsReducer'
+import { initialize, createBlog } from '../reducers/blogsReducer'
 import { setError } from '../reducers/isErrorReducer'
 import { setNotification } from '../reducers/notificationReducer'
 import LoginForm from './LoginForm'
@@ -46,12 +46,14 @@ const Home = () => {
   }
 
   //LIKE FUNCTIONALITY
+  /*
   const increaseLike = id => {
     const blog = blogs.find(blog => blog.id === id)
     dispatch(like(blog))
-  }
+  }*/
 
   //DELETING BLOGS
+  /*
   const deleteBlog = id => {
     const blog = blogs.find(blog => blog.id === id)
     const result = window.confirm(`Remove ${blog.title} by ${blog.author}?`)
@@ -67,7 +69,7 @@ const Home = () => {
         dispatch(setNotification(`Error in deleting a person: ${error.response.data.error}`))
       }
     }
-  }
+  }*/
 
   const handleLogin = async (event) => {
     event.preventDefault()
@@ -116,7 +118,7 @@ const Home = () => {
       </Togglable>
       <div className='blogs'>
         {blogs.sort((x,y) => y.likes - x.likes).map(blog =>
-          <Blog key={blog.id} blog={blog} increaseLike={() => increaseLike(blog.id)} deleteBlog={() => deleteBlog(blog.id)} user={user} />
+          <Blog key={blog.id} blog={blog} />
         )}
       </div>
     </div>

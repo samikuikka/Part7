@@ -11,6 +11,7 @@ import {
   Switch,
   Route
 } from 'react-router-dom'
+import BlogInfo from './components/BlogInfo'
 
 const App = () => {
   //
@@ -43,6 +44,9 @@ const App = () => {
       <Switch>
         <Route path='/users/:id' >
           <User />
+        </Route>
+        <Route path='/blogs/:id'>
+          <BlogInfo />
         </Route>
         <Route path='/users'>
           <Users />
