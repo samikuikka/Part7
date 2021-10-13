@@ -29,6 +29,10 @@ const BlogInfo = () => {
       <a href={blog.url}>{blog.url}</a>
       <div id='likes'>{blog.likes} likes <button id='like-button' onClick={() => increaseLike(blog.id)}>like</button></div>
       <div>added by {blog.author}</div>
+      <h3>comments</h3>
+      <ul>
+        {blog.comments.map(comment => <li key={comment.id}>{comment.comment}</li>)}
+      </ul>
     </div>
   )
 }
