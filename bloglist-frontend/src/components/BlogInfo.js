@@ -4,6 +4,21 @@ import { useParams } from 'react-router'
 import { initialize } from '../reducers/blogsReducer'
 import { like, comment } from '../reducers/blogsReducer'
 
+//styles
+import {
+  Typography,
+  Link,
+  Button,
+  Grid,
+  TextField,
+  List,
+  ListItem,
+  ListItemText
+} from '@material-ui/core'
+
+import CommentIcon from '@mui/icons-material/Comment'
+import IconButton from '@mui/material/IconButton'
+
 const BlogInfo = () => {
   const blogs = useSelector(state => state.blogs)
   const id = useParams().id
@@ -34,26 +49,47 @@ const BlogInfo = () => {
 
   return(
     <div>
-      <h2>{blog.title}</h2>
-      <a href={blog.url}>{blog.url}</a>
-      <div id='likes'>{blog.likes} likes <button id='like-button' onClick={() => increaseLike(blog.id)}>like</button></div>
-      <div>added by {blog.author}</div>
-      <h3>comments</h3>
+      <Typography variant='h4'>{blog.title}</Typography>
+      <Link href={blog.url}>{blog.url}</Link>
+
+      <div id='likes'
+        styles={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', }}>
+        <Grid container direction="row" alignItems="center">
+          <Grid item>
+            <Typography variant='subtitle1'>{blog.likes} likes</Typography>
+          </Grid>
+          <Grid item>
+            <Button variant='outlined' id='like-button' onClick={() => increaseLike(blog.id)}>like</Button>
+          </Grid>
+        </Grid>
+      </div>
+
+      <Typography variant='subtitle2'>added by {blog.author}</Typography>
+
+      <Typography variant='h4'>comments</Typography>
       <form onSubmit={newMessage}>
         <div>
-          <input
+          <TextField
             id='comment'
             type="text"
             value={commentField}
             name="Comment"
             onChange={({ target }) => setComment(target.value)}
           />
-          <button id='comment-button' type="submit">add comment</button>
+          <Button id='comment-button' color='primary' type="submit">add comment</Button>
         </div>
       </form>
-      <ul>
-        {blog.comments.map(comment => <li key={comment.id}>{comment.comment}</li>)}
-      </ul>
+
+      <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
+        { blog.comments.map(comment =>
+          <ListItem key={comment.id} >
+            <ListItemText>{comment.comment}</ListItemText>
+            <IconButton>
+              <CommentIcon />
+            </IconButton>
+          </ListItem>
+        )}
+      </List>
     </div>
   )
 }

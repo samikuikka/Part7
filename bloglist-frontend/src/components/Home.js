@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Togglable from './Togglable'
 import CreateForm from './CreateForm'
-import Blog from './Blog'
+//import Blog from './Blog'
 import { useSelector, useDispatch } from 'react-redux'
 import { initialize, createBlog } from '../reducers/blogsReducer'
 import { setError } from '../reducers/isErrorReducer'
@@ -10,6 +10,18 @@ import LoginForm from './LoginForm'
 import loginServices from '../services/login'
 import blogService from '../services/blogs'
 import { userLogin } from '../reducers/userReducer'
+import { Link } from 'react-router-dom'
+
+//syles
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableRow,
+  Paper,
+  Typography
+} from '@material-ui/core'
 
 const Home = () => {
   const blogs = useSelector(state => state.blogs)
@@ -111,16 +123,26 @@ const Home = () => {
   return(
     <div>
       <Togglable buttonLabel='create new blog'>
-        <h2>create new</h2>
+        <Typography variant='h4' align='center'>create new</Typography>
         <CreateForm
           createBlog={addBlog}
         />
       </Togglable>
-      <div className='blogs'>
-        {blogs.sort((x,y) => y.likes - x.likes).map(blog =>
-          <Blog key={blog.id} blog={blog} />
-        )}
-      </div>
+
+      <TableContainer component={Paper}>
+        <Table>
+          <TableBody>
+            {blogs.sort((x,y) => y.likes - x.likes).map(blog =>
+              <TableRow key={blog.id}>
+                <TableCell>
+                  <Typography variant='subtitle1'>
+                    <Link to={`/blogs/${blog.id}`}>{blog.title} {blog.author}</Link>
+                  </Typography>
+                </TableCell>
+              </TableRow>)}
+          </TableBody>
+        </Table>
+      </TableContainer>
     </div>
   )
 

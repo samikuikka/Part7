@@ -1,4 +1,8 @@
 import React, { useState } from 'react'
+import {
+  Button,
+  TextField
+} from '@material-ui/core'
 
 
 const CreateForm = ({ createBlog }) => {
@@ -20,38 +24,38 @@ const CreateForm = ({ createBlog }) => {
   }
 
   return(
-    <form onSubmit={addBlog} >
+    <form onSubmit={addBlog} align='center'>
       <div>
-          title
-        <input
+        <TextField
           id='title'
           type="text"
           value={title}
           name="Title"
           onChange={({ target }) => setTitle(target.value)}
+          label='title'
         />
       </div>
       <div>
-          author
-        <input
+        <TextField
           id='author'
           type="text"
           value={author}
           name="Author"
           onChange={({ target }) => setAuthor(target.value)}
+          label='author'
         />
       </div>
       <div>
-          url
-        <input
+        <TextField
           id='url'
           type="text"
           value={url}
           name="Url"
           onChange={({ target }) => setUrl(target.value)}
+          label='url'
         />
       </div>
-      <button id='create-button' type="submit">create</button>
+      <Button id='create-button' color='primary' type="submit">create</Button>
     </form>
   )
 }

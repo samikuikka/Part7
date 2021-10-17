@@ -7,6 +7,17 @@ import blogService from './services/blogs'
 import Users from './components/Users'
 import User from './components/User'
 
+//styling
+import Container from '@material-ui/core/Container'
+import {
+  AppBar,
+  Toolbar,
+  Button,
+  Typography,
+  Box
+} from '@material-ui/core'
+
+
 import {
   Switch,
   Route,
@@ -34,25 +45,34 @@ const App = () => {
     window.localStorage.clear()
   }
 
-  const padding = {
-    paddingRight: 5
-  }
-
-  const navBarStyle = {
-    backgroundColor: '#BDC3C7'
-  }
 
   return (
-    <div>
-      <div style={navBarStyle}>
-        <Link to='/blogs' style={padding} >blogs</Link>
-        <Link to='/users' style={padding} >users</Link>
-        {user
-          ? <span>{user.name} logged in <button type="button" onClick={handleLogout}>logout</button></span>
-          : null
-        }
-      </div>
-      <h2>blogs</h2>
+    <Container>
+
+      <Box sx={{ flexGrow: 1 }}>
+        <AppBar position='static'>
+          <Toolbar>
+            <Button color="inherit" component={Link} to='/blogs' >
+            blogs
+            </Button>
+            <Button color="inherit" component={Link} to='/users' >
+            users
+            </Button>
+            <Typography variant="h6" component="div" >
+              {user
+                ? <span><em>{user.name} logged in </em><Button color='inherit' onClick={handleLogout}>logout</Button></span>
+                : null
+              }
+            </Typography>
+          </Toolbar>
+        </AppBar>
+      </Box>
+      <Box sx={{ width: '100%' }} >
+        <Typography variant='h2' component="div" align='center' gutterBottom>
+          blogs
+        </Typography>
+      </Box>
+
       <Notification />
 
       <Switch>
@@ -69,7 +89,7 @@ const App = () => {
           <Home />
         </Route>
       </Switch>
-    </div>
+    </Container>
   )
 }
 

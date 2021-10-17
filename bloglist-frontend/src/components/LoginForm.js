@@ -1,31 +1,34 @@
 import React from 'react'
-
+import {
+  Button,
+  TextField
+} from '@material-ui/core'
 
 const LoginForm = (props) => {
 
   return(
     <form onSubmit={props.onSubmit}>
       <div>
-              username
-        <input
+        <TextField
           id='username'
           type="text"
           value={props.username}
           name="Username"
           onChange={props.onUserNameChange}
+          label='username'
         />
       </div>
       <div>
-            password
-        <input
+        <TextField
           id='password'
           type="password"
           value={props.password}
           name="Password"
           onChange={props.onPasswordChange}
+          label='password'
         />
       </div>
-      <button id="login-button" type="submit">login</button>
+      <Button id="login-button" color='primary' type="submit">login</Button>
     </form>
   )
 }
